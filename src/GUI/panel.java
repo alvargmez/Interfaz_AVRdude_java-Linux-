@@ -15,22 +15,28 @@ public class panel extends JPanel {
 
     private String hex = "";
     private String mc = "m16";
-    private String action = "prueba";
+    private String action = "";
 
-    private JPanel panel_b = new JPanel();
+    private JMenuBar barra = new JMenuBar();
+    private JMenu option = new JMenu("Opciónes");
+    private JMenu m = new JMenu("Cargar .hex");
 
     public panel(){
 
         setLayout(new BorderLayout());
+
+        barra.setLayout(new FlowLayout());
 
         area_texto.setFont(new Font("Ubuntu Light", Font.PLAIN, 14));
         area_texto.setBackground(Color.BLACK);
         area_texto.setForeground(Color.GREEN);
 
         boton("Archivo .hex", "selection_archivo");
-        boton("Cargar .hex", "cargar");
+        boton("Cargar .hex", "option");
+        boton("Prueba conexión", "option");
+        boton("Lista mc", "option");
 
-        add(panel_b, BorderLayout.NORTH);
+        add(barra, BorderLayout.NORTH);
         add(lamina_texto, BorderLayout.CENTER);
 
     }
@@ -39,13 +45,28 @@ public class panel extends JPanel {
 
     private void boton (String nombre, String action){
 
-        JButton b = new JButton(nombre);
+        if(action == "selection_archivo"){
 
-        panel_b.add(b);
+            JMenuItem item = new JMenuItem(nombre);
 
-        if(action == "selection_archivo") b.addActionListener(new archivo());
+            m.add(item);
+            barra.add(m);
 
-        if(action == "cargar") b.addActionListener(new cargar());
+            item.addActionListener(new archivo());
+
+        }
+
+        if(action == "option"){
+
+            JMenuItem item = new JMenuItem(nombre);
+
+            option.add(item);
+
+            barra.add(option);
+
+            item.addActionListener(new cargar());
+
+        }
 
     }
 
@@ -59,7 +80,7 @@ public class panel extends JPanel {
 
             fc.setDialogTitle("Selecciona .hex");
 
-            int	option_fc = fc.showOpenDialog(panel_b);
+            int	option_fc = fc.showOpenDialog(barra);
 
             if(option_fc == JFileChooser.APPROVE_OPTION) {
 
@@ -67,9 +88,9 @@ public class panel extends JPanel {
 
                 hex = archivo.getAbsolutePath();
 
-                System.out.println(hex);
+                //System.out.println(hex);
 
-            }else if(option_fc == JFileChooser.CANCEL_OPTION) System.out.println("Se canceló la selección del .hex");
+            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";//System.out.println("Se canceló la selección del .hex");
 
         }
     }
@@ -79,6 +100,8 @@ public class panel extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             control_avrdudes c = new control_avrdudes();
+
+            action = e.getActionCommand();
 
             area_texto.setText(c.cargar(hex, mc, action)) ;
 

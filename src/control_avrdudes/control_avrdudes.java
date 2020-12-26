@@ -12,8 +12,9 @@ public class control_avrdudes {
 
         String s = "";
 
-        if(action == "cargar_hex") s = "avrdude -c usbasp -P usb -p " + mc + " -U flash:w:" + hex + ":i";
-        else if(action == "prueba") s = "avrdude -p " + mc + " -c usbasp";
+        if(action == "Cargar .hex") s = "avrdude -c usbasp -P usb -p " + mc + " -U flash:w:" + hex + ":i";
+        else if(action == "Prueba conexión") s = "avrdude -p " + mc + " -c usbasp";
+        else if(action == "Lista mc") s=  "avrdude -c usbasp -p a";
 
         try {
 
@@ -27,9 +28,13 @@ public class control_avrdudes {
 
             while((line = reader.readLine()) != null){
 
-                System.out.println(line);
+                if((line = reader.readLine()) != "avrdude: AVR Part \"a\" not found."){
 
-                exit = (exit + "\n" + line);
+                    exit = (exit + "\n" + line);
+
+                }
+
+                //System.out.println(line);
 
             }
 
