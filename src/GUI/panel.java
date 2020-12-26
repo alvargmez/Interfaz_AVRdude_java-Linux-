@@ -14,6 +14,8 @@ public class panel extends JPanel {
     private JScrollPane lamina_texto = new JScrollPane(area_texto);
 
     private String hex = "";
+    private String mc = "m16";
+    private String action = "prueba";
 
     private JPanel panel_b = new JPanel();
 
@@ -74,7 +76,7 @@ public class panel extends JPanel {
 
             control_avrdudes c = new control_avrdudes();
 
-            area_texto.setText(c.cargar(hex)) ;
+            area_texto.setText(c.cargar(hex, mc, action)) ;
 
         }
     }
