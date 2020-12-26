@@ -14,7 +14,7 @@ public class control_avrdudes {
 
         if(action == "Cargar .hex") s = "avrdude -c usbasp -P usb -p " + mc + " -U flash:w:" + hex + ":i";
         else if(action == "Prueba conexión") s = "avrdude -p " + mc + " -c usbasp";
-        else if(action == "Lista mc") s=  "avrdude -c usbasp -p a";
+        else if(action == "Lista mc") s=  "avrdude -c usbasp -p Microcontrolador";
 
         try {
 
@@ -28,13 +28,7 @@ public class control_avrdudes {
 
             while((line = reader.readLine()) != null){
 
-                if((line = reader.readLine()) != "avrdude: AVR Part \"a\" not found."){
-
-                    exit = (exit + "\n" + line);
-
-                }
-
-                //System.out.println(line);
+                    exit = exit + "\n" + line;
 
             }
 
