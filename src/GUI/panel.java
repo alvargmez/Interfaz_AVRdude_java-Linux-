@@ -23,6 +23,10 @@ public class panel extends JPanel {
 
         setLayout(new BorderLayout());
 
+        area_texto.setFont(new Font("Ubuntu Light", Font.PLAIN, 14));
+        area_texto.setBackground(Color.BLACK);
+        area_texto.setForeground(Color.GREEN);
+
         boton("Archivo .hex", "selection_archivo");
         boton("Cargar .hex", "cargar");
 
