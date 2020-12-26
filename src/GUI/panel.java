@@ -14,12 +14,14 @@ public class panel extends JPanel {
     private JScrollPane lamina_texto = new JScrollPane(area_texto);
 
     private String hex = "";
-    private String mc = "m16";
+    private String mc = "";
     private String action = "";
 
     private JMenuBar barra = new JMenuBar();
     private JMenu option = new JMenu("Opciónes");
     private JMenu m = new JMenu("Cargar .hex");
+
+    private JComboBox desplegable = new JComboBox();
 
     public panel(){
 
@@ -35,6 +37,7 @@ public class panel extends JPanel {
         boton("Cargar .hex", "option");
         boton("Prueba conexión", "option");
         boton("Lista mc", "option");
+        boton(null, "mc");
 
         add(barra, BorderLayout.NORTH);
         add(lamina_texto, BorderLayout.CENTER);
@@ -65,6 +68,20 @@ public class panel extends JPanel {
             barra.add(option);
 
             item.addActionListener(new cargar());
+
+        }
+
+        if(action == "mc"){
+
+            JLabel mc = new JLabel("Microcontrolador:");
+
+            barra.add(mc);
+
+            desplegable.setEditable(true);
+            desplegable.addItem("m16");
+            barra.add(desplegable);
+
+            desplegable.addActionListener(new mc());
 
         }
 
@@ -104,6 +121,17 @@ public class panel extends JPanel {
             action = e.getActionCommand();
 
             area_texto.setText(c.cargar(hex, mc, action)) ;
+
+        }
+    }
+
+    private class mc implements ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+
+            mc = (String)desplegable.getSelectedItem();
+
+            System.out.println(mc);
 
         }
     }
