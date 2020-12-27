@@ -2,7 +2,6 @@ package GUI;
 
 import control_avrdudes.control_avrdudes;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,8 +26,11 @@ public class panel extends JPanel {
     private JPanel lamina_info = new JPanel();
 
     private JMenuBar barra = new JMenuBar();
-    private JMenu option = new JMenu("Opciónes");
-    private JMenu m = new JMenu("Cargar .hex");
+    private JMenu build = new JMenu("Build");
+    private JMenu list = new JMenu("Lista");
+    //private JMenu m = new JMenu("Cargar .hex");
+
+    private JToolBar barra_herr = new JToolBar();
 
     private JComboBox desplegable_mc = new JComboBox();
     private JComboBox desplegable_pg = new JComboBox();
@@ -38,20 +40,23 @@ public class panel extends JPanel {
         setLayout(new BorderLayout());
 
         barra.setLayout(new FlowLayout());
+        barra.setBackground(Color.LIGHT_GRAY);
 
         area_texto.setFont(new Font("Ubuntu Light", Font.PLAIN, 14));
         area_texto.setBackground(Color.BLACK);
         area_texto.setForeground(Color.GREEN);
 
-        boton("Archivo .hex", "selection_archivo");
-        boton("Cargar .hex", "option");
-        boton("Prueba conexión", "option");
-        boton("Lista mc", "option");
-        boton("Lista programadores", "option");
-        boton(null, "mc");
-        boton(null, "pg");
+        boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/carpeta.png")));
+        boton("Write .hex", "Build", null);
+        boton("Prueba conexión", "Build", null);
+        boton("Lista mc", "Lista", null);
+        boton("Lista programadores", "Lista", null);
+        boton(null, "mc", null);
+        boton(null, "pg", null);
 
 //----------------------------------------Construir panel de Información-------------------------------------------------
+
+        lamina_info.setBackground(Color.LIGHT_GRAY);
 
         lamina_info.add(hex_info);
         lamina_info.add(separador_1);
@@ -62,6 +67,7 @@ public class panel extends JPanel {
 //---------------------------------------Añadir laminas a lamina principal-----------------------------------------------
 
         add(barra, BorderLayout.NORTH);
+        add(barra_herr, BorderLayout.WEST);
         add(lamina_texto, BorderLayout.CENTER);
         add(lamina_info, BorderLayout.SOUTH);
 
@@ -69,26 +75,41 @@ public class panel extends JPanel {
 
 //---------------------------Crea botones---------------------------------------------------------------------------------
 
-    private void boton (String nombre, String action){
+    private void boton (String nombre, String action, ImageIcon i){
 
         if(action == "selection_archivo"){
 
-            JMenuItem item = new JMenuItem(nombre);
+            JButton item = new JButton("", i);
 
-            m.add(item);
-            barra.add(m);
+            barra_herr.setOrientation(1);
+            barra_herr.setBackground(Color.LIGHT_GRAY);
+
+            //m.add(item);
+            barra_herr.add(item);
 
             item.addActionListener(new archivo());
 
         }
 
-        if(action == "option"){
+        if(action == "Lista"){
 
             JMenuItem item = new JMenuItem(nombre);
 
-            option.add(item);
+            list.add(item);
 
-            barra.add(option);
+            barra.add(list);
+
+            item.addActionListener(new cargar());
+
+        }
+
+        if(action == "Build"){
+
+            JMenuItem item = new JMenuItem(nombre);
+
+            build.add(item);
+
+            barra.add(build);
 
             item.addActionListener(new cargar());
 
@@ -107,6 +128,7 @@ public class panel extends JPanel {
             if(action == "mc"){
 
                 desplegable_mc.setEditable(true);
+                desplegable_mc.addItem("m16");
                 barra.add(desplegable_mc);
 
                 desplegable_mc.addActionListener(new mc());
@@ -114,6 +136,7 @@ public class panel extends JPanel {
             }else {
 
                 desplegable_pg.setEditable(true);
+                desplegable_pg.addItem("usbasp");
                 barra.add(desplegable_pg);
 
                 desplegable_pg.addActionListener(new pg());
@@ -136,7 +159,7 @@ public class panel extends JPanel {
 
             fc.setDialogTitle("Selecciona .hex");
 
-            int	option_fc = fc.showOpenDialog(barra);
+            int	option_fc = fc.showOpenDialog(lamina_texto);
 
             if(option_fc == JFileChooser.APPROVE_OPTION) {
 

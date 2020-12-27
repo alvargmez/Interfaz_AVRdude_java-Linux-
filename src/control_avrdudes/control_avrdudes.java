@@ -14,7 +14,7 @@ public class control_avrdudes {
         String exit="";
         String t = "";
 
-        if(action == "Cargar .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:w:" + hex + ":i";
+        if(action == "Write .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:w:" + hex + ":i";
         else if(action == "Prueba conexión") s = "avrdude -p " + mc + " -c " + pg;
         else if(action == "Lista mc") s =  "avrdude -p ?";
         else if (action == "Lista programadores") s = "avrdude -c ?";
