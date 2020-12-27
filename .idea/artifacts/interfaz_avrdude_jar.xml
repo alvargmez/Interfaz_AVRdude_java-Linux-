@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="interfaz_avrdude:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/interfaz_avrdude_jar</output-path>
+    <root id="archive" name="interfaz_avrdude.jar">
+      <element id="module-output" name="interfaz_avrdude" />
+    </root>
+  </artifact>
+</component>
