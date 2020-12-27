@@ -14,8 +14,9 @@ public class panel extends JPanel {
     private JScrollPane lamina_texto = new JScrollPane(area_texto);
 
     private String hex = "";
-    private String mc = "";
-    private String pg = "";
+    private String g_hex = "";
+    private String mc = "m16";
+    private String pg = "usbasp";
     private String action = "";
 
     private JLabel mc_info = new JLabel(mc);
@@ -28,7 +29,7 @@ public class panel extends JPanel {
     private JMenuBar barra = new JMenuBar();
     private JMenu build = new JMenu("Build");
     private JMenu list = new JMenu("Lista");
-    //private JMenu m = new JMenu("Cargar .hex");
+    private JMenu fuses = new JMenu("Fuses");
 
     private JToolBar barra_herr = new JToolBar();
 
@@ -47,8 +48,11 @@ public class panel extends JPanel {
         area_texto.setForeground(Color.GREEN);
 
         boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/carpeta.png")));
+        boton("Guardar .hex", "g_archivo", new ImageIcon(panel.class.getResource("Iconos/guardar.png")));
+        boton("Prueba conexión", "conexion", new ImageIcon(panel.class.getResource("Iconos/red.png")));
         boton("Write .hex", "Build", null);
-        boton("Prueba conexión", "Build", null);
+        boton("Read .hex", "Build", null);
+        boton("Read fuses", "Fuses", null);
         boton("Lista mc", "Lista", null);
         boton("Lista programadores", "Lista", null);
         boton(null, "mc", null);
@@ -77,6 +81,17 @@ public class panel extends JPanel {
 
     private void boton (String nombre, String action, ImageIcon i){
 
+        if(action == "g_archivo"){
+
+            JButton item = new JButton("", i);
+
+            //m.add(item);
+            barra_herr.add(item);
+
+            item.addActionListener(new g_archivo());
+
+        }
+
         if(action == "selection_archivo"){
 
             JButton item = new JButton("", i);
@@ -88,6 +103,17 @@ public class panel extends JPanel {
             barra_herr.add(item);
 
             item.addActionListener(new archivo());
+
+        }
+
+        if(action == "conexion"){
+
+            JButton item = new JButton("", i);
+
+            //m.add(item);
+            barra_herr.add(item);
+
+            item.addActionListener(new cargar());
 
         }
 
@@ -110,6 +136,18 @@ public class panel extends JPanel {
             build.add(item);
 
             barra.add(build);
+
+            item.addActionListener(new cargar());
+
+        }
+
+        if(action == "Fuses"){
+
+            JMenuItem item = new JMenuItem(nombre);
+
+            fuses.add(item);
+
+            barra.add(fuses);
 
             item.addActionListener(new cargar());
 
@@ -176,6 +214,32 @@ public class panel extends JPanel {
         }
     }
 
+//--------------------------Guardar .hex------------------------------------------------------------------------------------
+
+    private class g_archivo implements ActionListener {
+
+        private final JFileChooser fc = new JFileChooser();
+
+        public void actionPerformed(ActionEvent e) {
+
+            fc.setDialogTitle("Gurardar .hex");
+
+            int	option_fc = fc.showOpenDialog(lamina_texto);
+
+            if(option_fc == JFileChooser.APPROVE_OPTION) {
+
+                control_avrdudes c = new control_avrdudes();
+                File archivo = fc.getSelectedFile();
+
+                String s = "Guardando flash en " + archivo.getAbsolutePath();
+
+                g_hex = archivo.getAbsolutePath();
+
+            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";//System.out.println("Se canceló la selección del .hex");
+
+        }
+    }
+
     private class cargar implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
@@ -186,10 +250,13 @@ public class panel extends JPanel {
 
             action = e.getActionCommand();
 
+            if(action == "") action = "Prueba conexión";
+
             if(action == "Lista mc") s = "Lista de Microcontroladores:";
             else if(action == "Lista programadores") s = "Lista de Programadores:";
+            else if(action == "Read .hex") s = "Guardando flash en " + g_hex;
 
-            area_texto.setText(s + c.cargar(hex, mc, pg, action)) ;
+            area_texto.setText(s + c.cargar(hex, g_hex, mc, pg, action)) ;
 
         }
     }

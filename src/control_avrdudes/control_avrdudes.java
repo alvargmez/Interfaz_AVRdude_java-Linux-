@@ -6,34 +6,88 @@ import java.io.InputStreamReader;
 
 public class control_avrdudes {
 
-    public String cargar(String hex, String mc, String pg, String action){
+    public String cargar(String hex, String g_hex, String mc, String pg, String action){
 
         Runtime rt = Runtime.getRuntime();
+
+        String sf[] = {
+
+                ("avrdude -c " + pg +" -P usb -p " + mc + " -U lfuse:r:" + "-" + ":h"),
+                ("avrdude -c " + pg +" -P usb -p " + mc + " -U hfuse:r:" + "-" + ":h"),
+                ("avrdude -c " + pg +" -P usb -p " + mc + " -U efuse:r:" + "-" + ":h"),
+
+        };
 
         String s = "";
         String exit="";
         String t = "";
 
         if(action == "Write .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:w:" + hex + ":i";
+        else if (action == "Read .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:r:" + g_hex + ":i";
+        else if (action == "Verificar .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:v:" + hex + ":i";
         else if(action == "Prueba conexión") s = "avrdude -p " + mc + " -c " + pg;
         else if(action == "Lista mc") s =  "avrdude -p ?";
         else if (action == "Lista programadores") s = "avrdude -c ?";
 
         try {
 
-            Process p = rt.exec(s);
+            if(action != "Read fuses"){
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                Process p = rt.exec(s);
 
-            String line;
+                BufferedReader reader_e = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                BufferedReader reader_i = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-            while((line = reader.readLine()) != null){
+                String line;
+
+                while((line = reader_e.readLine()) != null){
 
                     exit = exit + "\n" + line;
 
-            }
+                }
 
-            p.destroy();
+                while((line = reader_i.readLine()) != null){
+
+                    exit = exit + "\n" + line;
+
+                }
+
+                p.destroy();
+
+            }else if (action == "Read fuses"){
+
+                for(int i = 0; i<3; i++){
+
+                    Process p = rt.exec(sf[i]);
+
+                    BufferedReader reader_e = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                    BufferedReader reader_i = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+                    String line;
+
+                    if( i == 0) exit = "Leyendo fuses:";
+
+                    while((line = reader_e.readLine()) != null){
+
+                        exit = exit + "\n" + line;
+
+                    }
+
+                    if(i == 0) exit = exit + "\n" + "Low fuse: ";
+                    if(i == 1) exit = exit + "\n" + "High fuse: ";
+                    if(i == 2) exit = exit + "\n" + "Extend fuse: ";
+
+                    while((line = reader_i.readLine()) != null){
+
+                        exit = exit + line;
+
+                    }
+
+                    p.destroy();
+
+                }
+
+            }
 
         } catch (IOException e) {
 
