@@ -37,6 +37,7 @@ public class panel extends JPanel {
         boton("Cargar .hex", "option");
         boton("Prueba conexión", "option");
         boton("Lista mc", "option");
+        boton("Lista programadores", "option");
         boton(null, "mc");
 
         add(barra, BorderLayout.NORTH);
@@ -118,9 +119,14 @@ public class panel extends JPanel {
 
             control_avrdudes c = new control_avrdudes();
 
+            String s = "";
+
             action = e.getActionCommand();
 
-            area_texto.setText(c.cargar(hex, mc, action)) ;
+            if(action == "Lista mc") s = "Lista de Microcontroladores:";
+            if(action == "Lista programadores") s = "Lista de Programadores:";
+
+            area_texto.setText(s + c.cargar(hex, mc, action)) ;
 
         }
     }
