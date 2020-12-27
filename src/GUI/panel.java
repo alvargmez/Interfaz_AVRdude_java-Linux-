@@ -19,6 +19,18 @@ public class panel extends JPanel {
     private String pg = "usbasp";
     private String action = "";
 
+    private String lfuse = "";
+    private String hfuse = "";
+    private String efuse = "";
+
+    private JComboBox select_l = new JComboBox();
+    private JComboBox select_h = new JComboBox();
+    private JComboBox select_e = new JComboBox();
+
+    private JLabel item_l = new JLabel("lfuse");
+    private JLabel item_h = new JLabel("hfuse");
+    private JLabel item_e = new JLabel("efuse");
+
     private JLabel mc_info = new JLabel(mc);
     private JLabel pg_info = new JLabel(pg);
     private JLabel hex_info = new JLabel(hex);
@@ -32,6 +44,7 @@ public class panel extends JPanel {
     private JMenu fuses = new JMenu("Fuses");
 
     private JToolBar barra_herr = new JToolBar();
+    private JToolBar barra_fuses = new JToolBar();
 
     private JComboBox desplegable_mc = new JComboBox();
     private JComboBox desplegable_pg = new JComboBox();
@@ -43,16 +56,22 @@ public class panel extends JPanel {
         barra.setLayout(new FlowLayout());
         barra.setBackground(Color.LIGHT_GRAY);
 
+        barra_fuses.setOrientation(1);
+        barra_fuses.setBackground(Color.LIGHT_GRAY);
+
         area_texto.setFont(new Font("Ubuntu Light", Font.PLAIN, 14));
         area_texto.setBackground(Color.BLACK);
         area_texto.setForeground(Color.GREEN);
 
-        boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/carpeta.png")));
+        boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/new-file.png")));
         boton("Guardar .hex", "g_archivo", new ImageIcon(panel.class.getResource("Iconos/guardar.png")));
         boton("Prueba conexión", "conexion", new ImageIcon(panel.class.getResource("Iconos/red.png")));
+        boton(null, "select_fuses", null);
         boton("Write .hex", "Build", null);
         boton("Read .hex", "Build", null);
+        boton("Verificar .hex", "Build", null);
         boton("Read fuses", "Fuses", null);
+        boton("Write fuses", "Fuses", null);
         boton("Lista mc", "Lista", null);
         boton("Lista programadores", "Lista", null);
         boton(null, "mc", null);
@@ -72,6 +91,7 @@ public class panel extends JPanel {
 
         add(barra, BorderLayout.NORTH);
         add(barra_herr, BorderLayout.WEST);
+        add(barra_fuses, BorderLayout.EAST);
         add(lamina_texto, BorderLayout.CENTER);
         add(lamina_info, BorderLayout.SOUTH);
 
@@ -81,11 +101,56 @@ public class panel extends JPanel {
 
     private void boton (String nombre, String action, ImageIcon i){
 
+        if(action == "select_fuses"){
+
+            barra_fuses.add(item_l);
+
+            select_l.setMinimumSize(new Dimension(80, 20));
+            select_l.setMaximumSize(new Dimension(80, 20));
+            select_l.setPreferredSize(new Dimension(80, 20));
+
+            select_l.setEditable(true);
+            select_l.addItem("0x");
+            select_l.addItem("0b");
+
+            barra_fuses.add(select_l);
+
+            select_l.addActionListener(new select_fuses());
+
+            barra_fuses.add(item_h);
+
+            select_h.setMinimumSize(new Dimension(80, 20));
+            select_h.setMaximumSize(new Dimension(80, 20));
+            select_h.setPreferredSize(new Dimension(80, 20));
+
+            select_h.setEditable(true);
+            select_h.addItem("0x");
+            select_h.addItem("0b");
+
+            barra_fuses.add(select_h);
+
+            select_h.addActionListener(new select_fuses());
+
+            barra_fuses.add(item_e);
+
+            select_e.setMinimumSize(new Dimension(80, 20));
+            select_e.setMaximumSize(new Dimension(80, 20));
+            select_e.setPreferredSize(new Dimension(80, 20));
+
+            select_e.setEditable(true);
+            select_e.addItem("0x");
+            select_e.addItem("0b");
+
+            barra_fuses.add(select_e);
+
+            select_e.addActionListener(new select_fuses());
+
+        }
+
         if(action == "g_archivo"){
 
             JButton item = new JButton("", i);
 
-            //m.add(item);
             barra_herr.add(item);
 
             item.addActionListener(new g_archivo());
@@ -99,7 +164,6 @@ public class panel extends JPanel {
             barra_herr.setOrientation(1);
             barra_herr.setBackground(Color.LIGHT_GRAY);
 
-            //m.add(item);
             barra_herr.add(item);
 
             item.addActionListener(new archivo());
@@ -110,7 +174,6 @@ public class panel extends JPanel {
 
             JButton item = new JButton("", i);
 
-            //m.add(item);
             barra_herr.add(item);
 
             item.addActionListener(new cargar());
@@ -187,6 +250,19 @@ public class panel extends JPanel {
 
     }
 
+    private class select_fuses implements ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+
+            lfuse = (String)select_l.getSelectedItem();
+            hfuse = (String)select_h.getSelectedItem();
+            efuse = (String)select_e.getSelectedItem();
+
+            //System.out.println(lfuse + hfuse + efuse);
+
+        }
+    }
+
 //-------------------------------Selección de archivo .hex------------------------------------------------------------------
 
     private class archivo implements ActionListener {
@@ -255,6 +331,7 @@ public class panel extends JPanel {
             if(action == "Lista mc") s = "Lista de Microcontroladores:";
             else if(action == "Lista programadores") s = "Lista de Programadores:";
             else if(action == "Read .hex") s = "Guardando flash en " + g_hex;
+            else if(action == "Verificar .hex") s = "Verificando " + hex + " con flas de " + mc;
 
             area_texto.setText(s + c.cargar(hex, g_hex, mc, pg, action)) ;
 
