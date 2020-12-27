@@ -19,13 +19,17 @@ public class panel extends JPanel {
     private String pg = "usbasp";
     private String action = "";
 
-    private String lfuse = "";
-    private String hfuse = "";
-    private String efuse = "";
+    private String lfuse = "0x";
+    private String hfuse = "0x";
+    private String efuse = "0x";
 
     private JComboBox select_l = new JComboBox();
     private JComboBox select_h = new JComboBox();
     private JComboBox select_e = new JComboBox();
+
+    private JLabel lfuse_info = new JLabel("lfuse: " + lfuse);
+    private JLabel hfuse_info = new JLabel("hfuse: " + hfuse);
+    private JLabel efuse_info = new JLabel("efuse: " + efuse);
 
     private JLabel item_l = new JLabel("lfuse");
     private JLabel item_h = new JLabel("hfuse");
@@ -36,6 +40,9 @@ public class panel extends JPanel {
     private JLabel hex_info = new JLabel(hex);
     private JLabel separador_1 = new JLabel("||");
     private JLabel separador_2 = new JLabel("||");
+    private JLabel separador_3 = new JLabel("||");
+    private JLabel separador_4 = new JLabel("|");
+    private JLabel separador_5 = new JLabel("|");
     private JPanel lamina_info = new JPanel();
 
     private JMenuBar barra = new JMenuBar();
@@ -81,11 +88,27 @@ public class panel extends JPanel {
 
         lamina_info.setBackground(Color.LIGHT_GRAY);
 
+        lfuse_info.setForeground(Color.BLUE);
+        hfuse_info.setForeground(Color.BLUE);
+        efuse_info.setForeground(Color.BLUE);
+
+        separador_1.setForeground(Color.RED);
+        separador_2.setForeground(Color.RED);
+        separador_3.setForeground(Color.RED);
+        separador_4.setForeground(Color.RED);
+        separador_5.setForeground(Color.RED);
+
         lamina_info.add(hex_info);
         lamina_info.add(separador_1);
         lamina_info.add(mc_info);
         lamina_info.add(separador_2);
         lamina_info.add(pg_info);
+        lamina_info.add(separador_3);
+        lamina_info.add(lfuse_info);
+        lamina_info.add(separador_4);
+        lamina_info.add(hfuse_info);
+        lamina_info.add(separador_5);
+        lamina_info.add(efuse_info);
 
 //---------------------------------------Añadir laminas a lamina principal-----------------------------------------------
 
@@ -105,6 +128,8 @@ public class panel extends JPanel {
 
             barra_fuses.add(item_l);
 
+            item_l.setForeground(Color.BLUE);
+
             select_l.setMinimumSize(new Dimension(80, 20));
             select_l.setMaximumSize(new Dimension(80, 20));
             select_l.setPreferredSize(new Dimension(80, 20));
@@ -119,6 +144,8 @@ public class panel extends JPanel {
 
             barra_fuses.add(item_h);
 
+            item_h.setForeground(Color.BLUE);
+
             select_h.setMinimumSize(new Dimension(80, 20));
             select_h.setMaximumSize(new Dimension(80, 20));
             select_h.setPreferredSize(new Dimension(80, 20));
@@ -132,6 +159,8 @@ public class panel extends JPanel {
             select_h.addActionListener(new select_fuses());
 
             barra_fuses.add(item_e);
+
+            item_e.setForeground(Color.BLUE);
 
             select_e.setMinimumSize(new Dimension(80, 20));
             select_e.setMaximumSize(new Dimension(80, 20));
@@ -257,6 +286,10 @@ public class panel extends JPanel {
             lfuse = (String)select_l.getSelectedItem();
             hfuse = (String)select_h.getSelectedItem();
             efuse = (String)select_e.getSelectedItem();
+
+            lfuse_info.setText("lfuse: " + lfuse);
+            hfuse_info.setText("hfuse: " + hfuse);
+            efuse_info.setText("efuse: " + efuse);
 
             //System.out.println(lfuse + hfuse + efuse);
 
