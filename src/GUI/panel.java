@@ -41,8 +41,6 @@ public class panel extends JPanel {
     private JLabel separador_1 = new JLabel("||");
     private JLabel separador_2 = new JLabel("||");
     private JLabel separador_3 = new JLabel("||");
-    private JLabel separador_4 = new JLabel("|");
-    private JLabel separador_5 = new JLabel("|");
     private JPanel lamina_info = new JPanel();
 
     private JMenuBar barra = new JMenuBar();
@@ -95,8 +93,6 @@ public class panel extends JPanel {
         separador_1.setForeground(Color.RED);
         separador_2.setForeground(Color.RED);
         separador_3.setForeground(Color.RED);
-        separador_4.setForeground(Color.RED);
-        separador_5.setForeground(Color.RED);
 
         lamina_info.add(hex_info);
         lamina_info.add(separador_1);
@@ -105,9 +101,7 @@ public class panel extends JPanel {
         lamina_info.add(pg_info);
         lamina_info.add(separador_3);
         lamina_info.add(lfuse_info);
-        lamina_info.add(separador_4);
         lamina_info.add(hfuse_info);
-        lamina_info.add(separador_5);
         lamina_info.add(efuse_info);
 
 //---------------------------------------Añadir laminas a lamina principal-----------------------------------------------
@@ -259,6 +253,8 @@ public class panel extends JPanel {
 
                 desplegable_mc.setEditable(true);
                 desplegable_mc.addItem("m16");
+                desplegable_mc.addItem("m2560");
+                desplegable_mc.addItem("m328p");
                 barra.add(desplegable_mc);
 
                 desplegable_mc.addActionListener(new mc());
@@ -267,6 +263,7 @@ public class panel extends JPanel {
 
                 desplegable_pg.setEditable(true);
                 desplegable_pg.addItem("usbasp");
+                desplegable_pg.addItem("arduino");
                 barra.add(desplegable_pg);
 
                 desplegable_pg.addActionListener(new pg());
