@@ -352,6 +352,8 @@ public class panel extends JPanel {
 
             control_avrdudes c = new control_avrdudes();
 
+            String fuses[] = {lfuse, hfuse, efuse};
+
             String s = "";
 
             action = e.getActionCommand();
@@ -363,7 +365,7 @@ public class panel extends JPanel {
             else if(action == "Read .hex") s = "Guardando flash en " + g_hex;
             else if(action == "Verificar .hex") s = "Verificando " + hex + " con flas de " + mc;
 
-            area_texto.setText(s + c.cargar(hex, g_hex, mc, pg, action)) ;
+            area_texto.setText(s + c.cargar(hex, g_hex, mc, pg, fuses, action)) ;
 
         }
     }

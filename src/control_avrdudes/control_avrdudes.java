@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class control_avrdudes {
 
-    public String cargar(String hex, String g_hex, String mc, String pg, String action){
+    public String cargar(String hex, String g_hex, String mc, String pg, String fuses[], String action){
 
         Runtime rt = Runtime.getRuntime();
 
@@ -25,6 +25,11 @@ public class control_avrdudes {
         if(action == "Write .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:w:" + hex + ":i";
         else if (action == "Read .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:r:" + g_hex + ":i";
         else if (action == "Verificar .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:v:" + hex + ":i";
+        else if (action == "Write fuses"){
+
+            s = "avrdude -c " + pg +" -P usb -p " + mc + " -U lfuse:w:" + fuses[0] + ":m" + " -U hfuse:w:" + fuses[1] + ":m" + " -U efuse:w:" + fuses[2] + ":m";
+
+        }
         else if(action == "Prueba conexión") s = "avrdude -p " + mc + " -c " + pg;
         else if(action == "Lista mc") s =  "avrdude -p ?";
         else if (action == "Lista programadores") s = "avrdude -c ?";
