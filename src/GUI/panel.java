@@ -313,9 +313,7 @@ public class panel extends JPanel {
 
                 hex_info.setText(archivo.getName());
 
-                //System.out.println(hex);
-
-            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";//System.out.println("Se canceló la selección del .hex");
+            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";
 
         }
     }
@@ -341,7 +339,7 @@ public class panel extends JPanel {
 
                 g_hex = archivo.getAbsolutePath();
 
-            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";//System.out.println("Se canceló la selección del .hex");
+            }else if(option_fc == JFileChooser.CANCEL_OPTION) hex ="";
 
         }
     }
@@ -364,6 +362,7 @@ public class panel extends JPanel {
             else if(action == "Lista programadores") s = "Lista de Programadores:";
             else if(action == "Read .hex") s = "Guardando flash en " + g_hex;
             else if(action == "Verificar .hex") s = "Verificando " + hex + " con flas de " + mc;
+            else if(action == "Write fuses") s = "Escribiendo configuración de fuses:";
 
             area_texto.setText(s + c.cargar(hex, g_hex, mc, pg, fuses, action)) ;
 
@@ -378,8 +377,6 @@ public class panel extends JPanel {
 
             mc_info.setText(mc);
 
-            System.out.println(mc);
-
         }
     }
 
@@ -390,8 +387,6 @@ public class panel extends JPanel {
             pg = (String)desplegable_pg.getSelectedItem();
 
             pg_info.setText(pg);
-
-            System.out.println(pg);
 
         }
     }

@@ -27,6 +27,22 @@ public class control_avrdudes {
         else if (action == "Verificar .hex") s = "avrdude -c " + pg +" -P usb -p " + mc + " -U flash:v:" + hex + ":i";
         else if (action == "Write fuses"){
 
+            if(fuses[0].charAt(0) == '0' && fuses[0].charAt(1) == 'b'){
+
+                fuses[0] = "0x" + conversion(fuses[0]);
+
+            }
+            if(fuses[1].charAt(0) == '0' && fuses[1].charAt(1) == 'b'){
+
+                fuses[1] = "0x" + conversion(fuses[1]);
+
+            }
+            if(fuses[2].charAt(0) == '0' && fuses[2].charAt(1) == 'b'){
+
+                fuses[2] = "0x" + conversion(fuses[2]);
+
+            }
+
             s = "avrdude -c " + pg +" -P usb -p " + mc + " -U lfuse:w:" + fuses[0] + ":m" + " -U hfuse:w:" + fuses[1] + ":m" + " -U efuse:w:" + fuses[2] + ":m";
 
         }
@@ -108,6 +124,58 @@ public class control_avrdudes {
 
         }
 
+    }
+
+    private String conversion (String fuse){
+
+        String fuse_intercambio="";
+
+        for(int i=2; i< fuse.length(); i++) {
+
+            fuse_intercambio = fuse_intercambio + fuse.charAt(i); //le quito el prefijo 0b para poder pasarlo a hexadecimal
+
+        }
+
+        int fuse_int = Integer.parseInt(fuse_intercambio);
+
+
+        return decimalAHexadecimal(binarioADecimal(fuse_int));
+
+    }
+
+    private String decimalAHexadecimal(int decimal) {
+
+        int residuo;
+        String hexadecimal = "";
+
+        char[] caracteresHexadecimales = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        while (decimal > 0) {
+            residuo = decimal % 16;
+            char caracterHexadecimal = caracteresHexadecimales[residuo];
+            hexadecimal = caracterHexadecimal + hexadecimal;
+            decimal = decimal / 16;
+        }
+        return hexadecimal;
+    }
+
+    // Conversiones de otras bases a decimal
+    private int binarioADecimal(int binario) {
+
+        int decimal = 0;
+        int potencia = 0;
+
+        // Ciclo infinito hasta que binario sea 0
+        while (true) {
+            if (binario == 0) {
+                break;
+            } else {
+                int temp = binario % 10;
+                decimal += temp * Math.pow(2, potencia);
+                binario = binario / 10;
+                potencia++;
+            }
+        }
+        return decimal;
     }
 
 }
