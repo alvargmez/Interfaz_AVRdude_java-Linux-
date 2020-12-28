@@ -71,6 +71,7 @@ public class panel extends JPanel {
         boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/new-file.png")));
         boton("Guardar .hex", "g_archivo", new ImageIcon(panel.class.getResource("Iconos/guardar.png")));
         boton("Prueba conexión", "conexion", new ImageIcon(panel.class.getResource("Iconos/red.png")));
+        boton("borrar", "borrar", new ImageIcon(panel.class.getResource("Iconos/goma-de-borrar.png")));
         boton(null, "select_fuses", null);
         boton("Write .hex", "Build", null);
         boton("Read .hex", "Build", null);
@@ -167,6 +168,23 @@ public class panel extends JPanel {
             barra_fuses.add(select_e);
 
             select_e.addActionListener(new select_fuses());
+
+        }
+
+        if(action == "borrar"){
+
+            JButton item = new JButton("", i);
+
+            barra_herr.add(item);
+
+            item.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+
+                    area_texto.setText("");
+
+                }
+            });
 
         }
 
