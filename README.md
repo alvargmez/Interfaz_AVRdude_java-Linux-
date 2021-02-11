@@ -11,4 +11,4 @@ La versión alfa v0.1 tiene las siguientes funcionalidades ya incorporadas:
   
 Bug encontrados por ahora:
 
-  - Error de escritura en fuses, en microcontroladores de menos de 3 fuses
+  - Error de escritura de fuses, en microcontroladores de menos de 3 fuses
