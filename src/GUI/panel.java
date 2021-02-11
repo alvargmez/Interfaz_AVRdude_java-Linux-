@@ -166,7 +166,6 @@ public class panel extends JPanel {
             select_e.addItem("0b");
 
             barra_fuses.add(select_e);
-
             select_e.addActionListener(new select_fuses());
 
         }
