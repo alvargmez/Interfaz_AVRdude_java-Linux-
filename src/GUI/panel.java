@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Objects;
 
 public class panel extends JPanel {
 
@@ -68,10 +69,10 @@ public class panel extends JPanel {
         area_texto.setBackground(Color.BLACK);
         area_texto.setForeground(Color.GREEN);
 
-        boton("Archivo .hex", "selection_archivo", new ImageIcon(panel.class.getResource("Iconos/new-file.png")));
-        boton("Guardar .hex", "g_archivo", new ImageIcon(panel.class.getResource("Iconos/guardar.png")));
-        boton("Prueba conexión", "conexion", new ImageIcon(panel.class.getResource("Iconos/red.png")));
-        boton("borrar", "borrar", new ImageIcon(panel.class.getResource("Iconos/goma-de-borrar.png")));
+        boton("Archivo .hex", "selection_archivo", new ImageIcon(Objects.requireNonNull(panel.class.getResource("Iconos/new-file.png"))));
+        boton("Guardar .hex", "g_archivo", new ImageIcon(Objects.requireNonNull(panel.class.getResource("Iconos/guardar.png"))));
+        boton("Prueba conexión", "conexion", new ImageIcon(Objects.requireNonNull(panel.class.getResource("Iconos/red.png"))));
+        boton("borrar", "borrar", new ImageIcon(Objects.requireNonNull(panel.class.getResource("Iconos/goma-de-borrar.png"))));
         boton(null, "select_fuses", null);
         boton("Write .hex", "Build", null);
         boton("Read .hex", "Build", null);
