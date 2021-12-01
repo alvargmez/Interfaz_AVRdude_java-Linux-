@@ -15,7 +15,7 @@ public class interfaz {
 
         f.setVisible(true);
         f.setTitle("AVRdude");
-        f.setBounds(pantalla.ancho() + pantalla.ancho()/2, pantalla.alto()/4, pantalla.ancho()/2, pantalla.alto());
+        f.setBounds(10,10, pantalla.ancho()/2, pantalla.alto()/2);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
